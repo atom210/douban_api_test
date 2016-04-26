@@ -1,0 +1,39 @@
+-- auto-gen settings (DO NOT MODIFY) --
+
+CWD=/Users/atom210/zhanggongyuan/source_code/douban_api_test
+Version=25
+VimEntryName=douban_api
+VimfilesDirName=.vimfiles.douban_api
+
+-- ex-plugins File Settings --
+
+LangType=auto
+Project=./.vimfiles.douban_api/project_tree.exproject
+FilenameList=./.vimfiles.douban_api/filenamelist
+Tag=./.vimfiles.douban_api/tags
+ID=./.vimfiles.douban_api/ID
+Symbol=./.vimfiles.douban_api/symbol
+Macro=./.vimfiles.douban_api/macro
+Cscope=./.vimfiles.douban_api/cscope.out
+Inherits=./.vimfiles.douban_api/inherits
+Bookmarks=./.vimfiles.douban_api/bookmarks
+
+vimentryRefs+=
+
+-- ex-plugins Behavior Settings --
+
+RestoreBuffers=false
+AskForRestoration=true
+RestoreInfo=./.vimfiles.douban_api/restore_info
+
+-- LookupFile Settings --
+
+LookupFileTag=./.vimfiles.douban_api/filenametags
+
+-- Visual Studio Settings --
+
+vsTaskList=./.vimfiles.douban_api/vs_task_list
+vsOutput=./.vimfiles.douban_api/vs_output
+vsFindResult1=./.vimfiles.douban_api/vs_find_results_1
+vsFindResult2=./.vimfiles.douban_api/vs_find_results_2
+

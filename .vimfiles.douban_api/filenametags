@@ -1,0 +1,6 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+batch_movie_info_getter.py	../batch_movie_info_getter.py	1
+douban_traverse_movies_link.py	../douban_traverse_movies_link.py	1
+quick_gen_project_douban_api_autogen.sh	../quick_gen_project_douban_api_autogen.sh	1
+test.py	../test.py	1
+test_douban_api.py	../test_douban_api.py	1

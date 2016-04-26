@@ -1,0 +1,10 @@
+file filter = c,C,c++,cc,cp,cpp,cxx,h,H,h++,hh,hp,hpp,hxx,inl,ipp,cs,js,java,hlsl,vsh,psh,fx,fxh,cg,shd,glsl,py,pyw,pyx,pxd,lua,vim,uc,m,wiki,ini,cfg,mak,mk,Makefile,makefile,sh,SH,bsh,bash,ksh,zsh,bat,log,err,exe,qrc,pro,pri,i,swg,py
+dir filter = 
+
+-[F]douban_api_test {
+ |-[p]batch_movie_info_getter.py
+ |-[p]douban_traverse_movies_link.py
+ |-[p]test.py
+ |-[p]test_douban_api.py }
+
+
