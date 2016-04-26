@@ -1,8 +1,11 @@
 #!/usr/bin/python2.7
 # -*- coding=utf-8 -*-
 
-import os, sys
+import os, sys, time
+import urllib3, pickle
 from pyquery import PyQuery as pyq
+
+urllib3.disable_warnings();
 
 def movie_links_range(year, index):
 	base_url="https://movie.douban.com/tag";
@@ -11,8 +14,8 @@ def movie_links_range(year, index):
 	print resource_url;
 	items = rtree('.nbg');
 	rst_list = [];
-	##for idx in range(len(items)):
-	for idx in range(1):
+	##for idx in range(1):
+	for idx in range(len(items)):
 		link = items.eq(idx).attr('href');
 		title = items.eq(idx).attr('title').encode("UTF-8");
 		rst_list.append((link, title))
@@ -31,16 +34,25 @@ def movie_links_range(year, index):
 	movie_detail_list = [];
 	for item in rst_list:
 		movie_detail = get_movie_detail_by_link(item[0]);
-		movie_detail_list.append(movie_detail);
+		if movie_detail is not None:
+			movie_detail["link_info"] = item;
+			movie_detail_list.append(movie_detail);
 		pass ;
 
-	return rst_list, movie_detail_list; 
+	return movie_detail_list; 
 
 def get_movie_detail_by_link(link):
 	movie_detail = dict();
 	movie_page = pyq(url=link);
 	info = movie_page('#info');
 	slist = info('span');
+	try:
+		movie_detail["rating_score"] = float(movie_page('.ll.rating_num').text());
+		movie_detail["rating_people"] = int(movie_page('.rating_people')('span').text());
+	except ValueError :
+		movie_detail["rating_score"] = float(0.0);
+		movie_detail["rating_people"] = int(0);
+
 	if len(slist) == 0:
 		return None;
 	## parse movie detail info
@@ -97,19 +109,45 @@ def get_movie_detail_by_link(link):
 
 	return movie_detail;
 
-if __name__ == "__main__":
-
-	movie_list, movie_detail_list = movie_links_range(2015, 10);
-	for idx, item in enumerate(movie_list):
+def movie_detail_fetch_test():
+	movie_detail_list = movie_links_range(2015, 10);
+	for idx, item in enumerate(movie_detail_list):
+		link_info = movie_detail_list[idx]["link_info"];
 		directors = movie_detail_list[idx]["directors"];
 		scriptwriters = movie_detail_list[idx]["script_writers"];
 		actors = movie_detail_list[idx]["actors"];
 		mtypes = movie_detail_list[idx]["movie_type"];
 		detail_info = "[ director : %s ; scriptwriter : %s ; actors : %s, %s ; movie_type : %s ]" % \
 				(directors[0][1], scriptwriters[0][1], actors[0][1], actors[1][1], mtypes[0]);
-		sys.stdout.write("url: %s\ttitle: %s\ndetails: %s\n" % (item[0], item[1], detail_info));
+		sys.stdout.write("url: %s\ttitle: %s\ndetails: %s\n" % (link_info[0], link_info[1], detail_info));
 
 		pass ; ## enumerate(movie_list)
+
+if __name__ == "__main__":
+
+	## movie_detail_fetch_test();
+	##loop_year = 2015; page_idx = 0; fileno = 0;
+	##loop_year = 2015; page_idx = 580; fileno = 29;
+	##loop_year = 2015; page_idx = 660; fileno = 33;
+	##loop_year = 2014; page_idx = 0; fileno = 0;
+	loop_year = 2013; page_idx = 0; fileno = 0;
+	outpath = "fetch_out/%d" % loop_year;
+	if not os.path.exists(outpath):
+		os.mkdir(outpath, 0755);
+
+	while True:
+		movie_detail_list = movie_links_range(loop_year, page_idx);
+		if len(movie_detail_list) <= 0 :
+			break ;
+		outfname = "%s/fetch_%03d.pkl" % (outpath, fileno);
+		with open(outfname, "w+") as outfile:
+			pickle.dump(movie_detail_list, outfile);
+
+		sys.stdout.write("pages start %d. fetched %d items\n" % (page_idx, len(movie_detail_list)) );
+		page_idx += len(movie_detail_list);
+		fileno += 1;
+		time.sleep(5);
+		##if True: break;
 
 	sys.exit(0);
 
