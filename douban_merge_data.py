@@ -49,4 +49,19 @@ def merge_movie_detail_info(year, fno):
 
 if __name__ == "__main__":
 	
+	year_list = [ 2013, 2014, 2015 ];
+	for year in year_list:
+		fetch_path = "fetch_out/%d" % year;
+		merge_path = "merge_out/%d" % year;
+		if not os.path.exists(merge_path):
+			os.mkdir(merge_path, 0755);
+
+		file_num = len(os.listdir(fetch_path));
+		for fno in range(file_num):
+			merge_fname = "%s/merge_%03d.pkl" % (merge_path, fno) ;
+			merge_info_list = merge_movie_detail_info(year, fno);
+			with open(merge_fname, "w+") as merge_file:
+				pickle.dump(merge_info_list, merge_file);
+	
 	sys.exit(0);
+
