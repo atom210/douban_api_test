@@ -28,7 +28,8 @@ def merge_movie_detail_info(year, fno):
 				countries = [ ci.encode("utf-8") for ci in item[u"countries"] ];
 				year = int(item[u"year"].encode("utf-8"), 10);
 				reviews_count = item[u"reviews_count"];
-				meta_dict[url] = (countries, year, reviews_count);
+				subtype = item[u"subtype"].encode("utf-8");
+				meta_dict[url] = (countries, year, reviews_count, subtype);
 			except :
 				pass ; 
 		
@@ -41,6 +42,7 @@ def merge_movie_detail_info(year, fno):
 					merge_info["countries"] = meta_dict[url][0];
 					merge_info["year"] = meta_dict[url][1];
 					merge_info["reviews_count"] = meta_dict[url][2];
+					merge_info["subtype"] = meta_dict[url][3];
 				merge_info_list.append(merge_info);
 			except :  
 				pass ; 
